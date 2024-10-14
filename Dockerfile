@@ -66,12 +66,12 @@ ENV MYSQL_PASSWORD="blesta"
 ENV MYSQL_DATABASE="blesta"
 
 # Start Apache
-CMD (cron -f &) && \
-    (sleep 10 && /usr/local/bin/php /var/www/html/index.php install -dbhost ${MYSQL_HOST} -dbname ${MYSQL_DATABASE} -dbuser ${MYSQL_USER} -dbpass ${MYSQL_PASSWORD} -hostname ${HOSTNAME} -docroot /var/www/html/) && \
+CMD (sleep 15 && /usr/local/bin/php /var/www/html/index.php install -dbhost ${MYSQL_HOST} -dbname ${MYSQL_DATABASE} -dbuser ${MYSQL_USER} -dbpass ${MYSQL_PASSWORD} -hostname ${HOSTNAME} -docroot /var/www/html/) && \
+    (cron -f &) && \
     apache2-foreground
 
 # Expose server port
 EXPOSE 8080
 
 # Set required volumes
-VOLUME ["/var/www/html/cache", "/var/www/html/config"]
+VOLUME ["/var/www/html/cache", "/var/www/html/config", "/var/www/uploads"]
