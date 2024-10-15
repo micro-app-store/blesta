@@ -43,6 +43,8 @@ RUN wget https://account.blesta.com/client/plugin/download_manager/client_main/d
     mv -f ./blesta/blesta/.htaccess /var/www/html && \
     mv -f ./blesta/blesta/* /var/www/html && \
     mv -f ./blesta/uploads/* /var/www/uploads && \
+    mkdir /var/www/html/config-bak && \
+    mv -f /var/www/html/config/* /var/www/html/config-bak && \
     rm -rf ./blesta.zip && \
     rm -rf ./blesta
 
@@ -66,7 +68,8 @@ ENV MYSQL_PASSWORD="blesta"
 ENV MYSQL_DATABASE="blesta"
 
 # Start Apache
-CMD (sleep 15 && /usr/local/bin/php /var/www/html/index.php install -dbhost ${MYSQL_HOST} -dbname ${MYSQL_DATABASE} -dbuser ${MYSQL_USER} -dbpass ${MYSQL_PASSWORD} -hostname ${HOSTNAME} -docroot /var/www/html/) && \
+CMD ([ ! -f /var/www/html/config/blesta.php ] && mv /var/www/html/config-bak/* /var/www/html/config/ && rm -r /var/www/html/config-bak/; true) && \
+    (sleep 15 && /usr/local/bin/php /var/www/html/index.php install -dbhost ${MYSQL_HOST} -dbname ${MYSQL_DATABASE} -dbuser ${MYSQL_USER} -dbpass ${MYSQL_PASSWORD} -hostname ${HOSTNAME} -docroot /var/www/html/) && \
     (cron -f &) && \
     apache2-foreground
 
