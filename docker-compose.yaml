@@ -17,6 +17,7 @@ services:
       - blesta:/var/www/html/config
       - blesta-cache:/var/www/html/cache
       - blesta-uploads:/var/www/uploads
+      - blesta-logs:/var/www/logs_blesta
     depends_on:
       - db
 
@@ -40,3 +41,5 @@ volumes:
     name: "blesta-uploads"
   blesta-db:
     name: "blesta-db"
+  blesta-logs:
+    name: "blesta-logs"

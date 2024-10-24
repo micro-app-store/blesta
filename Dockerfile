@@ -36,7 +36,7 @@ RUN wget https://raw.githubusercontent.com/composer/getcomposer.org/76a7060ccb93
     mv ./composer.phar /usr/local/bin/composer
 
 # Install Blesta
-RUN wget https://account.blesta.com/client/plugin/download_manager/client_main/download/254/blesta-5.10.2.zip -O blesta.zip &&\
+RUN wget https://account.blesta.com/client/plugin/download_manager/client_main/download/256/blesta-5.10.3.zip -O blesta.zip &&\
     mkdir ./blesta && \
     mkdir /var/www/uploads && \
     unzip blesta.zip -d ./blesta && \
@@ -77,4 +77,4 @@ CMD ([ ! -f /var/www/html/config/blesta.php ] && mv /var/www/html/config-bak/* /
 EXPOSE 8080
 
 # Set required volumes
-VOLUME ["/var/www/html/cache", "/var/www/html/config", "/var/www/uploads"]
+VOLUME ["/var/www/html/cache", "/var/www/html/config", "/var/www/uploads", "/var/www/logs_blesta"]
